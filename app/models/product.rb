@@ -1,5 +1,5 @@
 
-class Product < ApplicationRecord
+class Product < ActiveRecord
   has_many :reviews
   has_many :users, through: :reviews
 
@@ -16,6 +16,7 @@ class Product < ApplicationRecord
   end
 
   def average_rating
+    total_ratings = reviews.sum
     # Calculate the average star rating for all reviews of this product
     reviews.average(:star_rating).to_f
   end
