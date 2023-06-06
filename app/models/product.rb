@@ -1,5 +1,4 @@
-
-class Product < ActiveRecord
+class Product < ActiveRecord::Base
   has_many :reviews
   has_many :users, through: :reviews
 
@@ -19,5 +18,10 @@ class Product < ActiveRecord
     total_ratings = reviews.sum
     # Calculate the average star rating for all reviews of this product
     reviews.average(:star_rating).to_f
+  end
+
+  def users
+    # Return a collection of all the Users who reviewed the Product
+    User.joins(:reviews).where(reviews: { product_id: id })
   end
 end
